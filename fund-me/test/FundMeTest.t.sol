@@ -6,6 +6,7 @@ import {Test, console} from "forge-std/Test.sol";
 
 // importing contract
 import {FundMe} from "../src/FundMe.sol";
+import {FundMeDeploy} from "../script/FundMeDeploy.s.sol";
 
 contract FundMeTest is Test {
     FundMe public fundMe;
@@ -16,7 +17,13 @@ contract FundMeTest is Test {
         //         0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
         //     )
         // );
-        fundMe = (new FundMe());
+
+        // old way of deploying
+        // fundMe = (new FundMe(0x694AA1769357215DE4FAC081bf1f309aDC325306));
+
+        // new way
+        FundMeDeploy fundMeDeploy = new FundMeDeploy();
+        fundMe = fundMeDeploy.run();
     }
 
     function testMinUsdAmount() public {
@@ -37,7 +44,7 @@ contract FundMeTest is Test {
         //         0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
         //     )
         // );
-        assertEq(fundMe.i_owner(), address(this));
+        assertEq(fundMe.i_owner(), msg.sender);
     }
 
     // forge test -vvvv mt testPriceFeedVersion --fork-url <sepolia_rpc_url_from_alchemy>

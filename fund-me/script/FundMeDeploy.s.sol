@@ -5,9 +5,10 @@ import "forge-std/Script.sol";
 import "../src/FundMe.sol";
 
 contract FundMeDeploy is Script {
-    function run() external {
+    function run() external returns (FundMe) {
         vm.startBroadcast();
-        new FundMe();
+        FundMe fundMe = new FundMe(0x694AA1769357215DE4FAC081bf1f309aDC325306); // 0x694AA1769357215DE4FAC081bf1f309aDC325306 (sepolia address)
         vm.stopBroadcast();
+        return fundMe;
     }
 }
